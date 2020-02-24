@@ -8,4 +8,5 @@ jobs:
   - stage: build
     if: (tag IS NOT present)
     script:
+    - env
     - docker build --target BUILD .
