@@ -2,8 +2,9 @@
 !gradle
 !src
 !build.gradle
-!codenarc.rules
+!codenarc.groovy
 !gradle.properties
 !gradlew
 !settings.gradle
+!swagger-config.json
 !app.yml

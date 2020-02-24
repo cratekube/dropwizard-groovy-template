@@ -8,21 +8,21 @@ RUN apk --no-cache add libstdc++
 
 COPY gradle/wrapper ./gradle/wrapper
 COPY gradlew ./
-RUN ./gradlew --version
+RUN ./gradlew --no-daemon --version
 
 COPY *gradle* ./
 
 # Build the application fat jar, invalidate only if the source changes
 COPY src/main ./src/main
-RUN ./gradlew shadowJar
+RUN ./gradlew --no-daemon shadowJar
 
-COPY swagger-config.json settings.gradle ./
-RUN ./gradlew buildClient
+#COPY swagger-config.json ./
+#RUN ./gradlew --no-daemon buildClient
 
 COPY src/test ./src/test
-RUN ./gradlew test
+RUN ./gradlew --no-daemon test
 
-COPY codenarc.rules ./
-RUN ./gradlew check
+COPY codenarc.groovy ./
+RUN ./gradlew --no-daemon check
 
-RUN ./gradlew jacocoTestReport coveralls
+RUN ./gradlew --no-daemon jacocoTestReport coveralls

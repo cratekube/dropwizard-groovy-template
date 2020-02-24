@@ -139,48 +139,48 @@ def pomConfig = {
   }
 }
 
-subprojects {
-  publishing {
-    mavenPublication(MavenPublication) {
-      from components.java
-      artifact sourcesJar {
-        classifier 'sources'
-      }
-      artifact javadocJar {
-        classifier 'javadoc'
-      }
-      groupId 'io.cratekube'
-      artifactId 'dropwizard-groovy-template-client'
-      version '1.0.0'
-      pom.withXml {
-        def root = asNode()
-        root.appendNode('description', 'A REST API client for the dropwizard-groovy-template')
-        root.appendNode('name', 'Dropwizard Groovy Template Client')
-        root.appendNode('url', 'https://github.com/cratekube/dropwizard-groovy-template')
-        root.children().last() + pomConfig
-      }
-    }
-  }
-}
+//subprojects {
+//  publishing {
+//    mavenPublication(MavenPublication) {
+//      from components.java
+//      artifact sourcesJar {
+//        classifier 'sources'
+//      }
+//      artifact javadocJar {
+//        classifier 'javadoc'
+//      }
+//      groupId 'io.cratekube'
+//      artifactId 'dropwizard-groovy-template-client'
+//      version '1.0.0'
+//      pom.withXml {
+//        def root = asNode()
+//        root.appendNode('description', 'A REST API client for the dropwizard-groovy-template')
+//        root.appendNode('name', 'Dropwizard Groovy Template Client')
+//        root.appendNode('url', 'https://github.com/cratekube/dropwizard-groovy-template')
+//        root.children().last() + pomConfig
+//      }
+//    }
+//  }
+//}
 
-bintray {
-  user 'bintray_user'
-  key 'bintray_key'
-  publications = ['mavenPublication']
-
-  pkg {
-    repo = 'dropwizard-groovy-template-client'
-    name = 'dropwizard-groovy-template-client'
-    userOrg = 'cratekube'
-    licenses = ['Apache-2.0']
-    vcsUrl = 'https://github.com/cratekube/dropwizard-groovy-template.git'
-    version {
-      name = '1.0.0'
-      desc = '1.0.0'
-      released = new Date()
-    }
-  }
-}
+//bintray {
+//  user 'bintray_user'
+//  key 'bintray_key'
+//  publications = ['mavenPublication']
+//
+//  pkg {
+//    repo = 'dropwizard-groovy-template-client'
+//    name = 'dropwizard-groovy-template-client'
+//    userOrg = 'cratekube'
+//    licenses = ['Apache-2.0']
+//    vcsUrl = 'https://github.com/cratekube/dropwizard-groovy-template.git'
+//    version {
+//      name = '1.0.0'
+//      desc = '1.0.0'
+//      released = new Date()
+//    }
+//  }
+//}
 
 allprojects {
   version = "${System.env.APP_VERSION ?: '1.0-SNAPSHOT'}"
