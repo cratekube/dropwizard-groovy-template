@@ -56,7 +56,7 @@ test {
 
 jacocoTestReport {
   reports {
-    xml.enabled = true // coveralls plugin depends on xml format report
+    xml.enabled = true
     html.enabled = true
   }
 }
@@ -83,7 +83,7 @@ shadowJar {
 swagger {
   apiSource {
     springmvc = false
-    locations = ['com.example.pkg']
+    locations = ['io.cratekube']
     schemes = ['http', 'https']
     host = 'localhost:8080'
     basePath = '/'
@@ -109,37 +109,6 @@ task downloadAllDeps(type: Exec) {
 
 allprojects {
   version = "${System.env.APP_VERSION ?: '1.0-SNAPSHOT'}"
-}
-
-subprojects {
-  apply plugin: 'java'
-
-  task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
-  }
-
-  publishing {
-    repositories {
-      maven {
-        name 'artifactory'
-        url parent.version.endsWith('SNAPSHOT') ? "${SNAPURL}" : "${RELEASEURL}"
-        credentials {
-          username "${System.env.DEPLOY_USER}"
-          password "${System.env.DEPLOY_PASS}"
-        }
-      }
-    }
-
-    publications {
-      client(MavenPublication) {
-        groupId 'com.example.pkg'
-        artifactId project.name
-        from components.java
-        artifact sourcesJar
-      }
-    }
-  }
 }
 
 resolveSwaggerTemplate.dependsOn generateSwaggerDocumentation
