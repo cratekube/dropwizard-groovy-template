@@ -15,3 +15,4 @@
 !LICENSE
 !*.md
 !codenarc.groovy
+!swagger-config.json
