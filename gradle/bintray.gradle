@@ -1,0 +1,28 @@
+def bintrayUser = project.findProperty('bintrayUser') ?: System.env.BINTRAY_USER
+def bintrayKey = project.findProperty('bintrayKey') ?: System.env.BINTRAY_KEY
+boolean enableBintray = bintrayUser && bintrayKey
+
+if (enableBintray) {
+  bintray {
+    user = bintrayUser
+    key = bintrayKey
+    publications = ['mavenPublication']
+
+    pkg {
+      repo = 'maven'
+      name = "${project.name}-client"
+      userOrg = project.org
+      desc = project.description
+      issueTrackerUrl = project.tracker
+      vcsUrl = project.httpscm
+      licenses = [project.license]
+      githubRepo = "${project.org}/${project.name}"
+      githubReleaseNotesFile = 'README.md'
+      version {
+        name = releaseVersion
+        released = new Date()
+        vcsTag = releaseVersion
+      }
+    }
+  }
+}
