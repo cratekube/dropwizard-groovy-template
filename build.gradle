@@ -1,8 +1,9 @@
 plugins {
   id 'groovy'
+  id 'jacoco'
   id 'codenarc'
   id 'maven-publish'
-  id 'jacoco'
+  id 'com.jfrog.bintray' version '1.7.3'
   id 'com.github.kt3k.coveralls' version '2.6.3'
   id 'com.benjaminsproule.swagger' version '1.0.6'
   id 'org.hidetake.swagger.generator' version '2.11.0'
@@ -10,8 +11,9 @@ plugins {
 }
 
 repositories {
-  jcenter()
   mavenLocal()
+  jcenter()
+  jcenter()
 }
 
 dependencies {
@@ -105,6 +107,79 @@ task downloadAllDeps(type: Exec) {
   }
 
   commandLine 'echo', 'Downloaded all dependencies'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier 'sources'
+  from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier 'javadoc'
+  from javadoc.destinationDir
+}
+
+def pomConfig = {
+  licenses {
+    license {
+      name 'The Apache Software License, Version 2.0'
+      url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+      distribution 'repo'
+    }
+  }
+  developers {
+    developer {
+      id 'kod4n'
+      name 'Andrew Allen'
+      email 'anallen@cisco.com'
+    }
+  }
+  scm {
+    url 'https://github.com/cratekube/dropwizard-groovy-template'
+  }
+}
+
+subprojects {
+  publishing {
+    mavenPublication(MavenPublication) {
+      from components.java
+      artifact sourcesJar {
+        classifier 'sources'
+      }
+      artifact javadocJar {
+        classifier 'javadoc'
+      }
+      groupId 'io.cratekube'
+      artifactId 'dropwizard-groovy-template-client'
+      version '1.0.0'
+      pom.withXml {
+        def root = asNode()
+        root.appendNode('description', 'A REST API client for the dropwizard-groovy-template')
+        root.appendNode('name', 'Dropwizard Groovy Template Client')
+        root.appendNode('url', 'https://github.com/cratekube/dropwizard-groovy-template')
+        root.children().last() + pomConfig
+      }
+    }
+  }
+}
+
+bintray {
+  user 'bintray_user'
+  key 'bintray_key'
+  publications = ['mavenPublication']
+
+  pkg {
+    repo = 'dropwizard-groovy-template-client'
+    name = 'dropwizard-groovy-template-client'
+    userOrg = 'cratekube'
+    licenses = ['Apache-2.0']
+    vcsUrl = 'https://github.com/cratekube/dropwizard-groovy-template.git'
+    version {
+      name = '1.0.0'
+      desc = '1.0.0'
+      released = new Date()
+    }
+  }
 }
 
 allprojects {

@@ -9,6 +9,7 @@
 
 !.gitignore
 !.travis.yml
+!Dockerfile
 
 !LICENSE
 !*.md
