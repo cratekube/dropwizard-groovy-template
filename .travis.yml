@@ -1,0 +1,10 @@
+language: bash
+
+services:
+- docker
+
+jobs:
+  include:
+  - stage: docker-build
+    if: branch = master
+    script: ./ci/travis_docker_build.sh

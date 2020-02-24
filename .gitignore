@@ -1,14 +1,23 @@
-.gradle
-/build/
+*
 
-# Ignore Gradle GUI config
-gradle-app.setting
+!gradle
+!gradle/**/*
+!*gradle*
 
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
+!src
+!src/**/*
 
-# Cache of project
-.gradletasknamecache
+!ci
+!ci/*
 
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
+!.gitignore
+!.dockerignore
+!.travis.yml
+!Dockerfile
+!app.yml
+!entrypoint.sh
+
+!LICENSE
+!*.md
+!codenarc.groovy
+!swagger-config.json
