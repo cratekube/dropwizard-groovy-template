@@ -1,0 +1,9 @@
+*
+!gradle
+!src
+!build.gradle
+!codenarc.rules
+!gradle.properties
+!gradlew
+!settings.gradle
+!app.yml
