@@ -1,0 +1,146 @@
+plugins {
+  id 'groovy'
+  id 'codenarc'
+  id 'maven-publish'
+  id 'jacoco'
+  id 'com.github.kt3k.coveralls' version '2.6.3'
+  id 'com.benjaminsproule.swagger' version '1.0.6'
+  id 'org.hidetake.swagger.generator' version '2.11.0'
+  id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+repositories {
+  jcenter()
+  mavenLocal()
+}
+
+dependencies {
+  implementation 'org.codehaus.groovy:groovy:3.0.1'
+  implementation 'io.dropwizard:dropwizard-core:2.0.2'
+  implementation 'com.smoketurner:dropwizard-swagger:2.0.0-1'
+  implementation 'ru.vyarus:dropwizard-guicey:4.1.0'
+  implementation 'org.valid4j:valid4j:0.5.0'
+  implementation 'org.hamcrest:hamcrest-all:1.3'
+  implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+  swaggerCodegen 'io.swagger:swagger-codegen-cli:2.4.8'
+
+  testImplementation 'cglib:cglib-nodep:3.2.6'
+  testImplementation 'io.dropwizard:dropwizard-testing:2.0.2'
+  testImplementation 'org.spockframework:spock-core:2.0-M2-groovy-3.0'
+}
+
+swaggerSources {
+  "${project.name}" {
+    inputFile = file("${project.buildDir}/swagger-ui/swagger.json")
+    code {
+      language = 'java'
+      configFile = file('swagger-config.json')
+    }
+  }
+}
+
+codenarc {
+  configFile = rootProject.file('codenarc.groovy')
+}
+
+tasks.withType(Test) {
+  testLogging {
+    events 'passed', 'skipped', 'failed'
+  }
+}
+
+test {
+  useJUnitPlatform()
+}
+
+jacocoTestReport {
+  reports {
+    xml.enabled = true // coveralls plugin depends on xml format report
+    html.enabled = true
+  }
+}
+
+task buildClient(type: Copy) {
+  into "${rootDir}/${project.name}-client"
+  from "${buildDir}/swagger-code-${project.name}"
+}
+
+clean.doFirst {
+  delete "${rootDir}/${project.name}-client"
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': project.mainClass
+  }
+}
+
+shadowJar {
+  mergeServiceFiles()
+}
+
+swagger {
+  apiSource {
+    springmvc = false
+    locations = ['com.example.pkg']
+    schemes = ['http', 'https']
+    host = 'localhost:8080'
+    basePath = '/'
+    info {
+      title = "${project.name} swagger spec"
+      version = 'v1'
+      description = "swagger spec for the ${project.name}"
+    }
+    swaggerDirectory = "${project.buildDir}/swagger-ui"
+  }
+}
+
+task downloadAllDeps(type: Exec) {
+  configurations.each {
+    try {
+      it.files
+    } catch (IllegalStateException e) {
+    }
+  }
+
+  commandLine 'echo', 'Downloaded all dependencies'
+}
+
+allprojects {
+  version = "${System.env.APP_VERSION ?: '1.0-SNAPSHOT'}"
+}
+
+subprojects {
+  apply plugin: 'java'
+
+  task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+  }
+
+  publishing {
+    repositories {
+      maven {
+        name 'artifactory'
+        url parent.version.endsWith('SNAPSHOT') ? "${SNAPURL}" : "${RELEASEURL}"
+        credentials {
+          username "${System.env.DEPLOY_USER}"
+          password "${System.env.DEPLOY_PASS}"
+        }
+      }
+    }
+
+    publications {
+      client(MavenPublication) {
+        groupId 'com.example.pkg'
+        artifactId project.name
+        from components.java
+        artifact sourcesJar
+      }
+    }
+  }
+}
+
+resolveSwaggerTemplate.dependsOn generateSwaggerDocumentation
+buildClient.dependsOn generateSwaggerCode
