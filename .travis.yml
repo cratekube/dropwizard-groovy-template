@@ -9,4 +9,20 @@ jobs:
     if: (tag IS NOT present)
     script:
     - env
-    - docker build --build-arg TRAVIS=${TRAVIS} --build-arg TRAVIS_JOB_ID=${TRAVIS_JOB_ID} --target BUILD .
+    - docker build --build-arg TRAVIS=${TRAVIS} --build-arg TRAVIS_JOB_ID=${TRAVIS_JOB_ID} --target Build .
+  - stage: publish-latest
+    if: branch = master
+    script:
+      - env
+#      - docker login -u="${DOCKERHUB_USER}" -p="${DOCKERHUB_PASS}"
+#      - docker build --build-arg TRAVIS=${TRAVIS} --build-arg TRAVIS_JOB_ID=${TRAVIS_JOB_ID} --target Package --tag ${TRAVIS_REPO_SLUG}:latest .
+#      - docker login -u="${QUAYIO_USER}" -p="${QUAYIO_PASS}" quay.io
+#      - docker build --build-arg TRAVIS=${TRAVIS} --build-arg TRAVIS_JOB_ID=${TRAVIS_JOB_ID} --target Package --tag quay.io/${TRAVIS_REPO_SLUG}:latest .
+  - stage: publish-tag
+    if: (tag IS present)
+    script:
+      - env
+#      - docker login -u="${DOCKERHUB_USER}" -p="${DOCKERHUB_PASS}"
+#      - docker build --build-arg TRAVIS=${TRAVIS} --build-arg TRAVIS_JOB_ID=${TRAVIS_JOB_ID} --target Package --tag ${TRAVIS_REPO_SLUG}:${TRAVIS_TAG} .
+#      - docker login -u="${QUAYIO_USER}" -p="${QUAYIO_PASS}" quay.io
+#      - docker build --build-arg TRAVIS=${TRAVIS} --build-arg TRAVIS_JOB_ID=${TRAVIS_JOB_ID} --target Package --tag quay.io/${TRAVIS_REPO_SLUG}:${TRAVIS_TAG} .

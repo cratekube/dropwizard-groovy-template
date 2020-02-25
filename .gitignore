@@ -11,6 +11,8 @@
 !.dockerignore
 !.travis.yml
 !Dockerfile
+!app.yml
+!entrypoint.sh
 
 !LICENSE
 !*.md

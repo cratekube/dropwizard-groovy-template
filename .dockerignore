@@ -9,3 +9,4 @@
 !settings.gradle
 !swagger-config.json
 !app.yml
+!entrypoint.sh
