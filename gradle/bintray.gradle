@@ -21,10 +21,10 @@ if (enableBintray) {
         name = releaseVersion
         released = new Date()
         vcsTag = releaseVersion
-//        gpg {
-//          sign = true
-//          passphrase = gpgPassphrase
-//        }
+        gpg {
+          sign = true
+          passphrase = gpgPassphrase
+        }
       }
     }
   }
