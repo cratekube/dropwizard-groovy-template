@@ -17,13 +17,13 @@ project.ext {
     scm {
       connection project.httpscm
       developerConnection "scm:git:${project.scmUrl}"
-      tag project.releaseVersion
+      tag releaseVersion
       url project.scmUrl
     }
     issueManagement { url project.tracker }
     ciManagement { url "https://travis-ci.com/${project.org}/${project.name}" }
-    delegate.devlopers = developers
-    delegate.contributors = contributors
+    delegate.developers developers
+    delegate.contributors contributors
   }
   developers = {}
   contributors = {}

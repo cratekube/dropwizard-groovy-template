@@ -1,4 +1,7 @@
-boolean enableBintray = hasProperty('bintrayUser') && hasProperty('bintrayKey') && hasProperty('gpgPassphrase')
+boolean enableBintray = project.with {
+  bintrayUser && bintrayKey
+// && hasProperty('gpgPassphrase')
+}
 
 if (enableBintray) {
   bintray {
@@ -8,7 +11,8 @@ if (enableBintray) {
 
     pkg {
       repo = 'maven'
-      name = project.name
+      name = "${project.name}-client"
+      userOrg = project.org
       desc = project.description
       issueTrackerUrl = project.tracker
       vcsUrl = project.httpscm

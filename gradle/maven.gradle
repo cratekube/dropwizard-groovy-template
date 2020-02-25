@@ -23,7 +23,8 @@ subprojects {
         artifact sourcesJar
         artifact javadocJar
         groupId project.group
-        artifactId "${project.name}-client"
+        artifactId project.name
+        version project.releaseVersion
         pom.withXml {
           asNode().children().last() + pomConfig
         }

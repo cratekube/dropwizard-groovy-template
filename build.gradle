@@ -1,7 +1,5 @@
 plugins {
-  id 'jacoco'
-  id 'codenarc'
-  id 'com.jfrog.bintray' version '1.7.3'
+  id 'com.jfrog.bintray' version '1.8.4'
   id 'com.github.kt3k.coveralls' version '2.6.3'
   id 'com.benjaminsproule.swagger' version '1.0.6'
   id 'org.hidetake.swagger.generator' version '2.11.0'
@@ -10,12 +8,14 @@ plugins {
 
 allprojects {
   apply plugin: 'groovy'
-  version = "${System.env.APP_VERSION ?: '1.0-SNAPSHOT'}"
+  version = System.env.APP_VERSION ?: version
 }
 
 apply from: 'gradle/config.gradle'
 apply from: 'gradle/git.gradle'
 apply from: 'gradle/maven.gradle'
+apply from: 'gradle/bintray.gradle'
+apply from: 'gradle/quality.gradle'
 
 repositories {
   mavenLocal()
@@ -45,27 +45,6 @@ swaggerSources {
       language = 'java'
       configFile = file('swagger-config.json')
     }
-  }
-}
-
-codenarc {
-  configFile = rootProject.file('codenarc.groovy')
-}
-
-tasks.withType(Test) {
-  testLogging {
-    events 'passed', 'skipped', 'failed'
-  }
-}
-
-test {
-  useJUnitPlatform()
-}
-
-jacocoTestReport {
-  reports {
-    xml.enabled = true
-    html.enabled = true
   }
 }
 
