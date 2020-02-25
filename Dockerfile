@@ -17,7 +17,7 @@ COPY src/main ./src/main
 RUN ./gradlew --no-daemon shadowJar
 
 #COPY swagger-config.json ./
-#RUN ./gradlew --no-daemon buildClient
+RUN ./gradlew --no-daemon buildClient
 
 COPY src/test ./src/test
 RUN ./gradlew --no-daemon test

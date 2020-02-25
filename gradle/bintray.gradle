@@ -1,0 +1,27 @@
+boolean enableBintray = hasProperty('bintrayUser') && hasProperty('bintrayKey') && hasProperty('gpgPassphrase')
+
+if (enableBintray) {
+  bintray {
+    user = project.bintrayUser
+    key = project.bintrayKey
+    publications = ['mavenPublication']
+
+    pkg {
+      repo = 'maven'
+      name = project.name
+      desc = project.description
+      issueTrackerUrl = project.tracker
+      vcsUrl = project.httpscm
+      licenses = [project.license]
+      version {
+        name = releaseVersion
+        released = new Date()
+        vcsTag = releaseVersion
+//        gpg {
+//          sign = true
+//          passphrase = project.gpgPassphrase
+//        }
+      }
+    }
+  }
+}
