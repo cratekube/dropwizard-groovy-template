@@ -1,7 +1,6 @@
 def bintrayUser = project.findProperty('bintrayUser') ?: System.env.BINTRAY_USER
 def bintrayKey = project.findProperty('bintrayKey') ?: System.env.BINTRAY_KEY
-def gpgPassphrase = project.findProperty('gpgPassphrase') ?: System.env.GPG_PASSPHRASE
-boolean enableBintray = bintrayUser && bintrayKey && gpgPassphrase
+boolean enableBintray = bintrayUser && bintrayKey
 
 if (enableBintray) {
   bintray {
@@ -21,10 +20,6 @@ if (enableBintray) {
         name = releaseVersion
         released = new Date()
         vcsTag = releaseVersion
-        gpg {
-          sign = true
-          passphrase = gpgPassphrase
-        }
       }
     }
   }
