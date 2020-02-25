@@ -8,6 +8,7 @@ project.ext {
   pomConfig = {
     delegate.name project.name
     delegate.description project.description
+    url httpscm
     licenses {
       license {
         name project.license
