@@ -1,12 +1,12 @@
-boolean enableBintray = project.with {
-  bintrayUser && bintrayKey
-// && hasProperty('gpgPassphrase')
-}
+def bintrayUser = project.findProperty('bintrayUser') ?: System.env.BINTRAY_USER
+def bintrayKey = project.findProperty('bintrayKey') ?: System.env.BINTRAY_KEY
+def gpgPassphrase = project.findProperty('gpgPassphrase') ?: System.env.GPG_PASSPHRASE
+boolean enableBintray = bintrayUser && bintrayKey && gpgPassphrase
 
 if (enableBintray) {
   bintray {
-    user = project.bintrayUser
-    key = project.bintrayKey
+    user = bintrayUser
+    key = bintrayKey
     publications = ['mavenPublication']
 
     pkg {
@@ -23,7 +23,7 @@ if (enableBintray) {
         vcsTag = releaseVersion
 //        gpg {
 //          sign = true
-//          passphrase = project.gpgPassphrase
+//          passphrase = gpgPassphrase
 //        }
       }
     }
