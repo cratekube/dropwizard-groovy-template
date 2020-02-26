@@ -6,12 +6,12 @@ services:
 jobs:
   include:
   - stage: build
-    if: type = pull_request
+    if: type IN (push, pull_request)
     script:
     - env
     - docker build --build-arg TRAVIS=${TRAVIS} --build-arg TRAVIS_JOB_ID=${TRAVIS_JOB_ID} --target Build .
   - stage: publish-latest
-    if: type != pull_request AND branch = master
+    if: type = push AND branch = master
     script:
       - env
 #      - docker login -u="${DOCKERHUB_USER}" -p="${DOCKERHUB_PASS}"
@@ -19,7 +19,7 @@ jobs:
 #      - docker login -u="${QUAYIO_USER}" -p="${QUAYIO_PASS}" quay.io
 #      - docker build --build-arg TRAVIS=${TRAVIS} --build-arg TRAVIS_JOB_ID=${TRAVIS_JOB_ID} --target Package --tag quay.io/${TRAVIS_REPO_SLUG}:latest .
   - stage: publish-tag
-    if: type != pull_request AND branch = master AND tag IS present
+    if: type = push AND branch = master AND tag IS present
     script:
       - env
 #      - docker login -u="${DOCKERHUB_USER}" -p="${DOCKERHUB_PASS}"
