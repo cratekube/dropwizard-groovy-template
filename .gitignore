@@ -11,6 +11,8 @@
 !ci/*
 
 !.gitignore
+!.gitattributes
+!.editorconfig
 !.dockerignore
 !.travis.yml
 !Dockerfile

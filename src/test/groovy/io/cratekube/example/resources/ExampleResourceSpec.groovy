@@ -1,8 +1,7 @@
-package io.cratekube.example.resource
+package io.cratekube.example.resources
 
 import spock.lang.Specification
 import spock.lang.Subject
-import spock.util.matcher.HamcrestSupport
 
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.everyItem

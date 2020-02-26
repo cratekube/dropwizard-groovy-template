@@ -1,4 +1,4 @@
-package io.cratekube.example.resource
+package io.cratekube.example.resources
 
 import io.cratekube.example.model.ExampleModel
 import io.swagger.annotations.Api

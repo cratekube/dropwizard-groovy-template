@@ -1,5 +1,6 @@
 package io.cratekube
 
+import io.cratekube.example.App
 import spock.lang.Specification
 import spock.lang.Subject
 
