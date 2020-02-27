@@ -9,6 +9,7 @@ server:
 logging:
   loggers:
     io.cratekube: DEBUG
+    org.reflections: ERROR
 
 swagger:
   resourcePackage: io.cratekube.example.resources

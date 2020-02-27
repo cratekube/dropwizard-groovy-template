@@ -1,6 +1,5 @@
 package io.cratekube.example
 
-import io.cratekube.example.modules.CustomInjectorFactory
 import io.cratekube.example.modules.ProductionModule
 import io.dropwizard.Application
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor
@@ -10,6 +9,7 @@ import io.dropwizard.setup.Environment
 import io.federecio.dropwizard.swagger.SwaggerBundle
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration
 import ru.vyarus.dropwizard.guice.GuiceBundle
+import ru.vyarus.dropwizard.guice.test.binding.BindingsOverrideInjectorFactory
 
 /**
  * Application for this Dropwizard application.
@@ -39,8 +39,7 @@ class App extends Application<AppConfig> {
       // configures the application to use Guice for dependency injection
       addBundle GuiceBundle.builder()
                            .enableAutoConfig('io.cratekube.example')
-                           .injectorFactory(new CustomInjectorFactory())
-                           .useWebInstallers()
+                           .injectorFactory(new BindingsOverrideInjectorFactory())
                            .modules(new ProductionModule())
                            .build()
     }

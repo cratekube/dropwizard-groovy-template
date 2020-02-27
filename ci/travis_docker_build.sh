@@ -11,7 +11,8 @@ if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]]; then
   docker_tag="${TRAVIS_TAG:-latest}"
   if [[ "${docker_tag}" != "latest" ]]; then
     echo "[travis_docker_build] Uploading maven artifacts to bintray"
-    docker build --build-arg BINTRAY_USER=${BINTRAY_USER} --build-arg BINTRAY_KEY=${BINTRAY_KEY} --build-arg APP_VERSION=${docker_tag} --target BintrayPublish .
+    docker build --build-arg BINTRAY_USER=${BINTRAY_USER} --build-arg BINTRAY_KEY=${BINTRAY_KEY} \
+                 --build-arg BINTRAY_PUBLISH=true --build-arg APP_VERSION=${docker_tag} --target BintrayPublish .
   fi
 
   echo "[travis_docker_build] Packaging docker images for tag ${docker_tag}"

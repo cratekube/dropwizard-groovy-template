@@ -1,5 +1,6 @@
 def bintrayUser = project.findProperty('bintrayUser') ?: System.env.BINTRAY_USER
 def bintrayKey = project.findProperty('bintrayKey') ?: System.env.BINTRAY_KEY
+def bintrayPublish = project.findProperty('bintrayPublish') ?: System.env.BINTRAY_PUBLISH
 boolean enableBintray = bintrayUser && bintrayKey
 
 if (enableBintray) {
@@ -7,7 +8,7 @@ if (enableBintray) {
     user = bintrayUser
     key = bintrayKey
     publications = ['mavenPublication']
-    publish = true
+    publish = Boolean.valueOf(bintrayPublish)
 
     pkg {
       repo = 'maven'

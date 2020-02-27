@@ -56,5 +56,6 @@ FROM Build as BintrayPublish
 ARG APP_VERSION
 ARG BINTRAY_USER
 ARG BINTRAY_KEY
+ARG BINTRAY_PUBLISH
 
-RUN ./gradlew --no-daemon bintrayUpload --stacktrace
+RUN ./gradlew --no-daemon bintrayUpload

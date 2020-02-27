@@ -1,35 +1,27 @@
 package io.cratekube.example
 
-import io.dropwizard.testing.junit.DropwizardAppRule
-import org.junit.ClassRule
-import spock.lang.Shared
+import ru.vyarus.dropwizard.guice.test.spock.UseDropwizardApp
 import spock.lang.Specification
 
+import javax.inject.Inject
 import javax.ws.rs.client.Client
+import javax.ws.rs.client.Invocation
 
-import static io.dropwizard.testing.ResourceHelpers.resourceFilePath
-
+/**
+ * Base class for all integration specs.  This class provides a client for interacting with the
+ * Dropwizard application's API.
+ */
+@UseDropwizardApp(value = App, hooks = IntegrationSpecHook, config = 'src/test/resources/testapp.yml')
 class BaseIntegrationSpec extends Specification {
-  @Shared Client client
+  @Inject Client client
 
-  @ClassRule public static final DropwizardAppRule<AppConfig> APP = new DropwizardAppRule<>(
-    App,
-    resourceFilePath('testapp.yml')
-  )
-
-  def setupSpec() {
-    APP.before()
-  }
-
-  def cleanupSpec() {
-    APP.after()
-  }
-
-  def setup() {
-    client = APP.client()
-  }
-
-  def baseRequest(String path = '') {
-    return client.target("http://localhost:${APP.localPort}${path}").request()
+  /**
+   * Creates a client invocation builder using the provided path.
+   *
+   * @param path {@code non-null} api path to call
+   * @return an {@link Invocation.Builder} instance for the request
+   */
+  Invocation.Builder baseRequest(String path = '') {
+    return client.target("http://localhost:9000${path}").request()
   }
 }

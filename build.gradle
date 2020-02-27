@@ -24,12 +24,10 @@ repositories {
 
 dependencies {
   implementation 'org.codehaus.groovy:groovy:3.0.1'
-  implementation 'io.dropwizard:dropwizard-core:1.3.12'
-  implementation 'org.reflections:reflections:0.9.10'
-  implementation('com.smoketurner:dropwizard-swagger:1.3.12-1') {
-    exclude group: 'org.reflections', module: 'reflections'
-  }
-  implementation 'ru.vyarus:dropwizard-guicey:4.1.0'
+  implementation "io.dropwizard:dropwizard-core:${dropwizardVersion}"
+  implementation "io.dropwizard:dropwizard-client:${dropwizardVersion}"
+  implementation 'com.smoketurner:dropwizard-swagger:2.0.0-1'
+  implementation 'ru.vyarus:dropwizard-guicey:5.0.0'
   implementation 'org.valid4j:valid4j:0.5.0'
   implementation 'org.hamcrest:hamcrest-all:1.3'
   implementation 'com.google.code.findbugs:jsr305:3.0.2'
@@ -37,7 +35,7 @@ dependencies {
   swaggerCodegen 'io.swagger:swagger-codegen-cli:2.4.8'
 
   testImplementation 'cglib:cglib-nodep:3.2.6'
-  testImplementation 'io.dropwizard:dropwizard-testing:1.3.12'
+  testImplementation "io.dropwizard:dropwizard-testing:${dropwizardVersion}"
   testImplementation 'org.spockframework:spock-core:2.0-M2-groovy-3.0'
 }
 
