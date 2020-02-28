@@ -3,7 +3,7 @@
 [![SemVer](http://img.shields.io/badge/semver-2.0.0-blue.svg?style=flat)](http://semver.org/spec/v2.0.0)
 [![Download](https://api.bintray.com/packages/cratekube/maven/dropwizard-groovy-template-client/images/download.svg)](https://bintray.com/cratekube/maven/dropwizard-groovy-template-client/_latestVersion)
 [![Build Status](https://travis-ci.com/cratekube/dropwizard-groovy-template.svg?branch=master)](https://travis-ci.com/cratekube/dropwizard-groovy-template)
-[![Coverage Status](https://coveralls.io/repos/github/cratekube/dropwizard-groovy-template/badge.svg)](https://coveralls.io/github/cratekube/dropwizard-groovy-template)
+[![Coverage Status](https://coveralls.io/repos/github/cratekube/dropwizard-groovy-template/badge.svg?branch=master)](https://coveralls.io/github/cratekube/dropwizard-groovy-template?branch=master)
 
 A template repository for Dropwizard Groovy applications
 
