@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+#
 
 dropwizard() {
   java -jar /app/${CRATEKUBE_APP}.jar "$@" app.yml
