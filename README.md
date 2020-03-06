@@ -12,7 +12,7 @@ Internal and external services are configured by extending the Dropwizard applic
 settings. An environment variable parser is used to allow configuration settings to be overridden at runtime. 
 These configuration options can be seen in the [app config file](app.yml).
 
-## Local development
+## Local development #
 
 ### Gradle builds
 This project uses [gradle](https://github.com/gradle/gradle) for building and testing.  We also use the gradle wrapper
