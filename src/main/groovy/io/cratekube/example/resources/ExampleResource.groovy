@@ -9,7 +9,7 @@ import javax.ws.rs.Path
 import javax.ws.rs.Produces
 
 @Api
-@Path('')
+@Path('example')
 @Produces('application/json')
 @Consumes('application/json')
 class ExampleResource {

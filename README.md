@@ -27,17 +27,17 @@ java -jar build/libs/dropwizard-groovy-template-1.0.0-SNAPSHOT-all.jar
 ```
 
 ### Docker builds
-We strive to have our builds repeatable across development environment so we also provide a Docker build to generate the
-Dropwizard application.  The examples below should be executed from the root of the project.
+We strive to have our builds repeatable across development environments so we also provide a Docker build to generate 
+the Dropwizard application container.  The examples below should be executed from the root of the project.
 
-Running the base docker build run:
+Running the base docker build:
 ```bash
-docker run --target Build .
+docker run --target build .
 ```
 
 Generating the Dropwizard application docker image:
 ```bash
-docker run --target Package -t my-app .
+docker run --target package -t my-app .
 ```
 
 ## Using the API client
