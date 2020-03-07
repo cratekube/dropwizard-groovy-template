@@ -12,8 +12,17 @@ import javax.ws.rs.client.Invocation
  * Dropwizard application's API.
  */
 @UseDropwizardApp(value = App, hooks = IntegrationSpecHook, config = 'src/test/resources/testapp.yml')
-class BaseIntegrationSpec extends Specification {
+abstract class BaseIntegrationSpec extends Specification {
   @Inject Client client
+
+  /**
+   * Base path to use for API requests.  Extending classes should use a
+   * {@code basePath} property to set the base path that should be used
+   * for tests.
+   *
+   * @return base path for API requests
+   */
+  abstract String getBasePath()
 
   /**
    * Creates a client invocation builder using the provided path.
@@ -22,6 +31,6 @@ class BaseIntegrationSpec extends Specification {
    * @return an {@link Invocation.Builder} instance for the request
    */
   Invocation.Builder baseRequest(String path = '') {
-    return client.target("http://localhost:9000${path}").request()
+    return client.target("http://localhost:9000${basePath}${path}").request()
   }
 }

@@ -13,6 +13,8 @@ import static org.valid4j.matchers.ArgumentMatchers.notEmptyString
 import static spock.util.matcher.HamcrestSupport.expect
 
 class ExampleResourceIntegrationSpec extends BaseIntegrationSpec {
+  String basePath = '/example'
+
   def 'should get list response when executing GET'() {
     when:
     def result = baseRequest().get(new GenericType<List<ExampleModel>>() {})

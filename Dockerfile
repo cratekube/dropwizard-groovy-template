@@ -1,9 +1,7 @@
-## setup the Build target
-FROM openjdk:8u131-jdk-alpine as build
-
-## build args required for coveralls reporting
-ARG TRAVIS
-ARG TRAVIS_JOB_ID
+######################
+##   build target   ##
+######################
+FROM openjdk:8u212-jdk-alpine3.9 as build
 
 WORKDIR /app
 RUN apk --no-cache add bash
@@ -29,11 +27,17 @@ COPY codenarc.groovy ./
 COPY src/test ./src/test
 RUN ./gradlew --no-daemon check
 
+## build args required for coveralls reporting
+ARG TRAVIS
+ARG TRAVIS_JOB_ID
+
 ## run code coverage report, send to coveralls when executing in Travis CI
 RUN ./gradlew --no-daemon jacocoTestReport coveralls
 
-## setup the Package target
-FROM openjdk:8u131-jre-alpine as package
+######################
+##  package target  ##
+######################
+FROM openjdk:8u212-jre-alpine3.9 as package
 
 ## setup env var for the app name
 ENV CRATEKUBE_APP dropwizard-groovy-template
@@ -45,6 +49,9 @@ COPY --from=build /app/build/libs/${CRATEKUBE_APP}-*-all.jar /app/${CRATEKUBE_AP
 ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["server"]
 
+######################
+##  publish target  ##
+######################
 FROM build as publish
 
 ## setup args needed for bintray tasks
