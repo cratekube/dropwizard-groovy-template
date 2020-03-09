@@ -66,3 +66,4 @@ APIs can be found at `http://localhost:<configured port>/swagger`
 ## Contributing
 If you are interesting in contributing to this project please read the [contribution](CONTRIBUTING.md) and 
 [pull request](PR_GUIDELINES.md) guidelines.  Thank you for your interest in CrateKube!
+#Sample commit
